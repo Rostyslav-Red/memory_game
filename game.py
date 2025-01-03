@@ -3,7 +3,7 @@ class Game:
 	"""
 	Defines the state of the game
 	"""
-	def __init__(self, size: int, filled_number: int):
+	def __init__(self, size: int, filled_number: int, lives: int = 3, score: int = 0):
 		# parameters of the board
 		self.size: int = size
 		self.filled_number: int = filled_number
@@ -17,17 +17,25 @@ class Game:
 		# the number of correctly guessed cells
 		self.correct_guess_number: int = self.board.find_correctly_guessed_cells_number()
 
-	def update_correct_guess_number(self) -> None:
-		"""
-		Updates the correct guess number by counting the number of cells that are both filled and discovered
-		:return: the number of correct guesses
-		"""
-		self.correct_guess_number = self.board.find_correctly_guessed_cells_number()
+		self.lives: int = lives
+		self.score: int = score
+		self.level: int = 1
 
-game = Game(5, 4)
-game.board.board[0][0].is_discovered = True
-game.board.board[0][0].is_filled = True
+	def advance_level(self) -> None:
+		if self.level % 2 == 0:  # Every second level, increase board size
+			self.size += 1
+		self.level += 1
+		self.filled_number += 1  # Add one more filled tile per level
+		self.board.reset_board(self.size, self.filled_number)
 
-game.update_correct_guess_number()
-print(game.board)
-print(game.correct_guess_number)
+	def lose_life(self) -> bool:
+		self.lives -= 1
+		return self.lives > 0
+
+	def reset_game(self) -> None:
+		self.size = 3
+		self.filled_number = 3
+		self.lives = 3
+		self.score = 0
+		self.level = 1
+		self.board.reset_board(self.size, self.filled_number)

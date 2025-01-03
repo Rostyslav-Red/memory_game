@@ -47,6 +47,11 @@ class Board:
 			board[coord[0]][coord[1]].is_filled = True
 
 		return board
+	
+	def reset_board(self, size: int, filled_number: int) -> None:
+		self.size = size
+		self.filled_number = filled_number
+		self.board = self.create_board()
 
 	def find_correctly_guessed_cells_number(self) -> int:
 		return sum(cell.is_discovered and cell.is_filled for cell in chain.from_iterable(self.board))
