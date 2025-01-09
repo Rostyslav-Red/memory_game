@@ -21,11 +21,13 @@ class Game:
 		self.score: int = score
 		self.level: int = 1
 
+		self.phase = "memorize_phase"
+
 	def advance_level(self) -> None:
-		if self.level % 2 == 0:  # Every second level, increase board size
-			self.size += 1
 		self.level += 1
 		self.filled_number += 1  # Add one more filled tile per level
+		if self.filled_number / self.size**2 > 4/9:
+			self.size += 1
 		self.board.reset_board(self.size, self.filled_number)
 
 	def lose_life(self) -> bool:
