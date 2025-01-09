@@ -11,9 +11,10 @@ def pygame_init():
     game_font = pygame.font.Font(font_path, 36)
     game_screen = pygame.display.set_mode((window_height, window_width))
     pygame.display.set_caption("Memory Game")
-    pygame.mixer.init()
-    pygame.mixer.music.load("music.mp3")
-    pygame.mixer.music.play()
+    if has_music:
+        pygame.mixer.init()
+        pygame.mixer.music.load("music.mp3")
+        pygame.mixer.music.play()
     return game_screen, game_font
 
 def determine_elements_sizes():
@@ -41,7 +42,8 @@ else:
     file_name = "data_1.csv"
 file = open(f"./data/{file_name}", "w", newline="")
 writer = writer(file)
-writer.writerow(["x_coord", "y_coord", "level", "board_size", "is_correct", "lives", "time"])
+writer.writerow(["x_coord", "y_coord", "level", "board_size", "is_correct",
+                 "lives", "time", "has_music", "participant_id"])
 
 while run:
     # Calculate dynamic sizes and margins
@@ -69,12 +71,13 @@ while run:
                                     if not game.lose_life():
                                         # game.reset_game()  # Reset game on game over
                                         writer.writerow([cell.x, cell.y, game.level, game.board.size, cell.is_filled,
-                                                         game.lives, pygame.time.get_ticks()])
+                                                         game.lives, pygame.time.get_ticks(),
+                                                         has_music, participant_id])
                                         file.close()
                                         run = False
                                         break
                                 writer.writerow([cell.x, cell.y, game.level, game.board.size, cell.is_filled,
-                                                 game.lives, pygame.time.get_ticks()])
+                                                 game.lives, pygame.time.get_ticks(), has_music, participant_id])
 
                                 break
                 # Advance level

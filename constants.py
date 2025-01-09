@@ -15,3 +15,7 @@ transition_time = 1500
 padding = 10
 top_spacing = 100
 font_path = "Nunito-Regular.ttf"
+has_music = True
+# the idea is to assign some sort of identification to each participant (like an s-number)
+# so that the data can be linked back to the participant (and their age, sex, etc.)
+participant_id = 0
