@@ -1,4 +1,6 @@
 from board import Board
+
+
 class Game:
 	"""
 	Defines the state of the game
@@ -21,7 +23,7 @@ class Game:
 		self.score: int = score
 		self.level: int = 1
 
-		self.phase = "memorize_phase"
+		self.phase = "break_phase"
 
 	def advance_level(self) -> None:
 		self.level += 1

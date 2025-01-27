@@ -4,6 +4,10 @@ from game import Game
 from visualization import draw_board
 from csv import writer
 import os
+import time
+
+# time.sleep(5)
+
 
 def pygame_init():
     pygame.init()
@@ -16,6 +20,7 @@ def pygame_init():
         pygame.mixer.music.load("music.mp3")
         pygame.mixer.music.play()
     return game_screen, game_font
+
 
 def determine_elements_sizes():
     n_rows = n_cols = game.board.size
@@ -55,6 +60,16 @@ while run:
             file.close()
 
         match game.phase:
+            case "break_phase":
+                if pygame.time.get_ticks() - start_time > break_time:
+                    game.phase = "memorize_phase"
+                    start_time = pygame.time.get_ticks()
+            case "memorize_phase":
+                if pygame.time.get_ticks() - start_time > memorize_time:
+                    game.phase = "playing_phase"
+                    for row in game.board.board:
+                        for cell in row:
+                            cell.is_discovered = False  # Hide the correct tiles after memorization time
             case "playing_phase":
                 # Player clicked on a screen
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -85,20 +100,10 @@ while run:
                     game.phase = "level_transition_phase"
                     level_transition_start = pygame.time.get_ticks()
                     game.advance_level()
-
-            case "memorize_phase":
-                if pygame.time.get_ticks() - start_time > memorize_time:
-                    game.phase = "playing_phase"
-                    for row in game.board.board:
-                        for cell in row:
-                            cell.is_discovered = False  # Hide the correct tiles after memorization time
-
             case "level_transition_phase":
                 if pygame.time.get_ticks() - level_transition_start > transition_time:
-                    game.phase = "memorize_phase"
+                    game.phase = "break_phase"
                     start_time = pygame.time.get_ticks()
-
-
 
     draw_board(tile_size, margin_x, margin_y, screen, font, game)
     pygame.display.flip()

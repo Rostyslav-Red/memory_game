@@ -19,20 +19,19 @@ def draw_board(tile_size, margin_x, margin_y, screen, font, game):
     level_rect = level_text.get_rect(topright=(window_width - 10, 10))
     screen.blit(level_text, level_rect)
 
-
     for row in game.board.board:
         for cell in row:
             if game.phase == "memorize_phase":
                 # During memorization phase, show the actual tile color
                 if cell.is_filled:
-                    color = green 
+                    color = yellow
                 else:
-                    color = red 
+                    color = blue
             else:
                 # After memorization phase, hide tiles
                 if cell.is_discovered:
                     if cell.is_filled:
-                        color = green
+                        color = yellow
                     else:
                         color = red
                 else:
