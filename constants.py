@@ -19,7 +19,11 @@ break_time = 1000
 padding = 10
 top_spacing = 100
 font_path = "Nunito-Regular.ttf"
-has_music = True
+
+condition = "no_music"
+# condition = "slow_music"
+# condition = "fast_music"
+
 # the idea is to assign some sort of identification to each participant (like an s-number)
 # so that the data can be linked back to the participant (and their age, sex, etc.)
 participant_id = 0
