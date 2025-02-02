@@ -15,9 +15,13 @@ def pygame_init():
     game_font = pygame.font.Font(font_path, 36)
     game_screen = pygame.display.set_mode((window_height, window_width))
     pygame.display.set_caption("Memory Game")
-    if not condition == "no_music":
+    if condition == "slow_music":
         pygame.mixer.init()
-        pygame.mixer.music.load("music.mp3")
+        pygame.mixer.music.load("slow_music.mp3")
+        pygame.mixer.music.play()
+    elif condition == "fast_music":
+        pygame.mixer.init()
+        pygame.mixer.music.load("fast_music.mp3")
         pygame.mixer.music.play()
     return game_screen, game_font
 
