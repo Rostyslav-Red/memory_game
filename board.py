@@ -3,6 +3,7 @@ from cell import Cell
 from itertools import chain
 from typing import List
 
+
 class Board:
 	"""
 	This class represents the board of the game. Essentially, this class stores the current configuration of the game.

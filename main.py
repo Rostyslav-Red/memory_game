@@ -46,7 +46,7 @@ level_transition_start = None
 
 # data file
 if os.listdir("./data"):
-    file_name = "data_" + str(int(max(os.listdir("./data"))[5:-4])+1) + ".csv"
+    file_name = "data_" + str(max(list(int(f[5:-4]) + 1 for f in os.listdir("./data")))) + ".csv"
 else:
     file_name = "data_1.csv"
 file = open(f"./data/{file_name}", "w", newline="")
